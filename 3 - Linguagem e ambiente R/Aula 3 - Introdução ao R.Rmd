@@ -1,0 +1,182 @@
+---
+title: "aula de R"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+title: "Aula R"
+output: html_document
+---
+
+Vetor de pesos
+```{r}
+weight <- c(60, 72, 57, 90, 95, 72)
+weight
+```
+
+Vetor de alturas
+```{r}
+height <- c(1.75, 1.8, 1.65, 1.9, 1.74, 1.91)
+height
+```
+
+Vetor de indices de massa corpórea
+```{r}
+bmi <- weight / (height ^ 2)
+bmi
+```
+
+Cálculo da média
+```{r}
+sum(weight)
+sum(weight)/length(weight)
+mean(weight)
+```
+
+Cálculo do desvio padrão
+```{r}
+xbar <- sum(weight) / length(weight)
+weight - xbar
+(weight - xbar) ^ 2
+sum((weight - xbar) ^ 2)
+sqrt(sum((weight - xbar) ^ 2) / (length(weight) -1))
+sd(weight)
+```
+
+Gráfico do vetor de BMI
+```{r}
+plot(height, weight, pch=2)
+# IMC ideal
+hh <- c(1.65, 1.7, 1.75, 1.8, 1.85, 1.9)
+imcIdeal <- 22.5 * hh ^ 2
+lines(hh, imcIdeal)
+```
+
+t-Test da hipótese de que a média é 22.5: Não é possível 
+```{r}
+t.test(bmi, mu=22.5)
+```
+
+t-Test da hipótese de que a média é 15: 
+```{r}
+t.test(bmi, mu=15)
+```
+
+```{r}
+x <- c(10, NA, 13)
+mean(x)
+mean(x, na.rm = TRUE)
+```
+
+```{r}
+x <- c(red=1, blue=2, green=3)
+x
+```
+ 
+```{r}
+names(x)
+x["blue"]*x
+```
+```{r}
+y <- 1:3
+names(y) <- c("red", "green", "blue")
+y
+```
+
+Criação de matriz
+```{r}
+x <- 1:12
+dim(x) <- c(3, 4)
+x
+x <- matrix(1:12, nrow=3, byrow = TRUE)
+x
+```
+
+Nomear linhas da matriz
+```{r}
+rownames(x) <- LETTERS[1:3]
+x
+```
+
+Transposição de matrix
+```{r}
+t(x)
+```
+
+Criar um fator
+```{r}
+pain <- c(0, 3, 2, 2, 1)
+fpain <- factor(pain, levels = 0:3)
+fpain
+```
+
+Mudar os niveis
+```{r}
+levels(fpain) <- c("none", "mild", "medium", "severe")
+fpain
+```
+
+Converter para numero
+```{r}
+as.numeric(fpain)
+```
+
+Listas
+```{r}
+intake.pre <- c(5260, 5470, 5640, 6180, 6390, 6515, 6805, 7515, 7515, 8230, 8770)
+intake.post <- c(3910, 4220, 3885, 5160, 5645, 4680, 5265, 5975, 6790, 6900, 7335)
+myList <- list(before=intake.pre, after=intake.post)
+myList
+```
+Um elemento da lista
+```{r}
+myList$before
+```
+
+Converter lista para data frame
+```{r}
+d <- data.frame(intake.pre, intake.post)
+d
+```
+
+Uma linha do data.frame
+```{r}
+d[1, ]
+```
+
+Uma columa do data.frame
+```{r}
+d[, 1]
+d$intake.pre
+```
+
+Manipulando vetores
+```{r}
+intake.post[intake.pre > 7000]
+intake.post[intake.pre > 7000 | intake.pre < 6000]
+```
+
+Manipulando data.frame
+```{r}
+d[d$intake.pre > 7000 | d$intake.pre <6000, ]
+```
+
+...
+
+Carregando um data frame de um arquivo
+```{r}
+wine <- read.table("http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data",
+                   header=TRUE, sep=",")
+head(wine)
+```
+
+```{r}
+save(wine, file="wine.Rdata")
+rm(wine)
+load("wine.Rdata")
+```
+
